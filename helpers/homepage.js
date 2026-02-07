@@ -19,7 +19,7 @@ export async function CommuteLogo (page) {
 
 }
 
-export async function HeroTextContent (Page) {
+export async function HeroTextContent (page) {
     await expect(page.getByText('Commute')).toBeVisible();
     await expect(page.getByText('Making Klang Valley public transport easier for everyone – locals & tourists alike.')).toBeVisible();
 }
