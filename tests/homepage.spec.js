@@ -3,6 +3,7 @@ import {
     GeneralHomepage,
     CommuteLogo,
     HeroTextContent,
+    Pathfinder
 } from '../helpers/homepage';
 
 const BaseUrl ='https://commute.my/';
@@ -34,7 +35,7 @@ test.describe('Homepage',()=>{
     test.describe('Pathfinder Section',()=>{
 
         test ('004 | Path Finder Section is present',async ({page}) => {
-        
+            await Pathfinder(page);
         });
 
         test ('005 | Path Finder field is present and functional',async ({page}) => {

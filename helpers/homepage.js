@@ -24,13 +24,20 @@ export async function HeroTextContent (Page) {
     await expect(page.getByText('Making Klang Valley public transport easier for everyone – locals & tourists alike.')).toBeVisible();
 }
 
-export async function Pathfinder (Page) {
+export async function Pathfinder (page) {
     await expect(page.getByText('Plan Your Journey')).toBeVisible();
     await expect(page.getByText('Find the best route across RapidKL lines.')).toBeVisible();
 
-    
+    const originField = page.getByPlaceholder('Origin');
+    await expect(originField).toBeVisible();
+    await expect(originField).toHaveAttribute('placeholder', 'Origin');
 
+    const destinationField = page.getByPlaceholder('Destination');
+    await expect(destinationField).toBeVisible();
+    await expect(destinationField).toHaveAttribute('placeholder', 'Destination');
 
+    const swapButton = page.getByRole('button', { name: 'Swap origin and destination' });
+    await expect(swapButton).toBeVisible();
 }
 
 
