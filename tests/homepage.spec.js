@@ -1,6 +1,8 @@
 import {test, expect} from '@playwright/test';
 import {
-    GeneralHomepage
+    GeneralHomepage,
+    CommuteLogo,
+    HeroTextContent,
 } from '../helpers/homepage';
 
 const BaseUrl ='https://commute.my/';
@@ -14,35 +16,32 @@ test.describe('Homepage',()=>{
 
     test.describe('Page Load Elements',()=>{
 
-        test ('Homepage - 001 | Page Load - Title and Meta Tags',async ({page}) => {
+        test ('001 | Page Load - Title and Meta Tags',async ({page}) => {
             await GeneralHomepage(page);
         });
 
-        test ('Homepage - 002 | Page Load - Logo Display',async ({page}) => {
-  
+        test ('002 | Page Load - Logo Display',async ({page}) => {
+            await CommuteLogo(page);
         });
 
-        test ('Homepage - 003 | Page Load - Main Heading Display',async ({page}) => {
-    
-        });
-
-        test ('Homepage - 004 | Page Load - Tagline Display',async ({page}) => {
-    
+        test ('003 | Page Load - Main Heading Display',async ({page}) => {
+            await HeroTextContent(page);
+            console.log("This works!");
         });
 
     });
 
     test.describe('Pathfinder Section',()=>{
 
-        test ('005 | Path Finder Section is present',async ({page}) => {
+        test ('004 | Path Finder Section is present',async ({page}) => {
         
         });
 
-        test ('006 | Path Finder field is present and functional',async ({page}) => {
+        test ('005 | Path Finder field is present and functional',async ({page}) => {
    
         });
 
-        test ('007 | Path Finder Search Route button is present and visible',async ({page}) => {
+        test ('006 | Path Finder Search Route button is present and visible',async ({page}) => {
    
         });
 
@@ -50,22 +49,15 @@ test.describe('Homepage',()=>{
     
     test.describe('Browse Line Section',()=>{
 
-        test ('008 | Browse Line Section is present and visible',async ({page}) => {
+        test ('007 | Browse Line Section is present and visible',async ({page}) => {
    
         });
 
-        test ('009 | Browse Line button is present and visible',async ({page}) => {
+        test ('008 | Browse Line button is present and visible',async ({page}) => {
  
         });
 
     });
 
-    test.describe('Footer Section',()=>{
-
-        test ('010 | Footer section is present and visible',async ({page}) => {
-  
-        });
-    
-    });
 
 })
