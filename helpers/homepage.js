@@ -24,7 +24,7 @@ export async function HeroTextContent (page) {
     await expect(page.getByText('Making Klang Valley public transport easier for everyone – locals & tourists alike.')).toBeVisible();
 }
 
-export async function Pathfinder (page) {
+export async function PathfinderUI (page) {
     await expect(page.getByText('Plan Your Journey')).toBeVisible();
     await expect(page.getByText('Find the best route across RapidKL lines.')).toBeVisible();
 
@@ -38,6 +38,38 @@ export async function Pathfinder (page) {
 
     const swapButton = page.getByRole('button', { name: 'Swap origin and destination' });
     await expect(swapButton).toBeVisible();
+}
+
+const originField = page.getByPlaceholder('Origin');
+const destinationField = page.getByPlaceholder('Destination');
+const swapButton = page.getByRole('button', { name: 'Swap origin and destination' });
+
+export async function PathfinderInput (page){
+
+    await originField.fill ('KL Sentral')
+    await destinationField.fill ('Masjid Jamek')
+
+    await originField.clear();
+    await expect(originField).toHaveValue('');
+
+    await destinationField.clear();
+    await expect(destinationField).toHaveValue('');
+}
+
+export async function PathfinderSwapButton (page){
+    await originField.fill ('KL Sentral')
+    await destinationField.fill ('Masjid Jamek')
+
+    await swapButton.click(page);
+
+    await expect(originField).toHaveValue('Masjid Jamek');
+    await expect(destinationField).toHaveValue('KL Sentral');
+
+
+}
+
+export async function PathfinderSearchButton (page){
+    
 }
 
 
