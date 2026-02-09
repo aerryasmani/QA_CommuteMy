@@ -51,6 +51,11 @@ test.describe('Homepage',()=>{
             await PathfinderSwapButton(page);
         });
 
+        test ('007 | Search Route button is present and working',async ({page}) => {
+            await PathfinderInput(page);
+            await PathfinderSearchButton(page);
+        });
+
     });
     
     test.describe('Browse Line Section',()=>{
