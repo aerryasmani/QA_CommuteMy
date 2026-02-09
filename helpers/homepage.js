@@ -40,11 +40,10 @@ export async function PathfinderUI (page) {
     await expect(swapButton).toBeVisible();
 }
 
-const originField = page.getByPlaceholder('Origin');
-const destinationField = page.getByPlaceholder('Destination');
-const swapButton = page.getByRole('button', { name: 'Swap origin and destination' });
-
 export async function PathfinderInput (page){
+
+    const originField = page.getByPlaceholder('Origin');
+    const destinationField = page.getByPlaceholder('Destination');
 
     await originField.fill ('KL Sentral')
     await destinationField.fill ('Masjid Jamek')
@@ -57,15 +56,27 @@ export async function PathfinderInput (page){
 }
 
 export async function PathfinderSwapButton (page){
+    
+    const originField = page.getByPlaceholder('Origin');
+    const destinationField = page.getByPlaceholder('Destination');
+    const swapButton = page.getByRole('button', { name: 'Swap origin and destination' });
+    
     await originField.fill ('KL Sentral')
     await destinationField.fill ('Masjid Jamek')
 
-    await swapButton.click(page);
-
-    await expect(originField).toHaveValue('Masjid Jamek');
-    await expect(destinationField).toHaveValue('KL Sentral');
-
-
+    for (let i = 0; i < 3; i++) {
+        await swapButton.click();
+  
+        if (i % 2 === 0) {
+        // After odd clicks (1st, 3rd, etc.)
+        await expect(originField).toHaveValue('Masjid Jamek');
+        await expect(destinationField).toHaveValue('KL Sentral');
+        } else {
+    // After even clicks (2nd, 4th, etc.)
+        await expect(originField).toHaveValue('KL Sentral');
+        await expect(destinationField).toHaveValue('Masjid Jamek');
+         }
+    }
 }
 
 export async function PathfinderSearchButton (page){
