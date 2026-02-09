@@ -24,7 +24,7 @@ export async function HeroTextContent (page) {
     await expect(page.getByText('Making Klang Valley public transport easier for everyone – locals & tourists alike.')).toBeVisible();
 }
 
-export async function Pathfinder (page) {
+export async function PathfinderUI (page) {
     await expect(page.getByText('Plan Your Journey')).toBeVisible();
     await expect(page.getByText('Find the best route across RapidKL lines.')).toBeVisible();
 
@@ -38,6 +38,49 @@ export async function Pathfinder (page) {
 
     const swapButton = page.getByRole('button', { name: 'Swap origin and destination' });
     await expect(swapButton).toBeVisible();
+}
+
+export async function PathfinderInput (page){
+
+    const originField = page.getByPlaceholder('Origin');
+    const destinationField = page.getByPlaceholder('Destination');
+
+    await originField.fill ('KL Sentral')
+    await destinationField.fill ('Masjid Jamek')
+
+    await originField.clear();
+    await expect(originField).toHaveValue('');
+
+    await destinationField.clear();
+    await expect(destinationField).toHaveValue('');
+}
+
+export async function PathfinderSwapButton (page){
+    
+    const originField = page.getByPlaceholder('Origin');
+    const destinationField = page.getByPlaceholder('Destination');
+    const swapButton = page.getByRole('button', { name: 'Swap origin and destination' });
+    
+    await originField.fill ('KL Sentral')
+    await destinationField.fill ('Masjid Jamek')
+
+    for (let i = 0; i < 3; i++) {
+        await swapButton.click();
+  
+        if (i % 2 === 0) {
+        // After odd clicks (1st, 3rd, etc.)
+        await expect(originField).toHaveValue('Masjid Jamek');
+        await expect(destinationField).toHaveValue('KL Sentral');
+        } else {
+    // After even clicks (2nd, 4th, etc.)
+        await expect(originField).toHaveValue('KL Sentral');
+        await expect(destinationField).toHaveValue('Masjid Jamek');
+         }
+    }
+}
+
+export async function PathfinderSearchButton (page){
+    
 }
 
 

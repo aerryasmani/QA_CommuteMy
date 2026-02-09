@@ -3,7 +3,10 @@ import {
     GeneralHomepage,
     CommuteLogo,
     HeroTextContent,
-    Pathfinder
+    PathfinderUI,
+    PathfinderInput,
+    PathfinderSwapButton,
+    PathfinderSearchButton
 } from '../helpers/homepage';
 
 const BaseUrl ='https://commute.my/';
@@ -35,15 +38,17 @@ test.describe('Homepage',()=>{
     test.describe('Pathfinder Section',()=>{
 
         test ('004 | Path Finder Section is present',async ({page}) => {
-            await Pathfinder(page);
+            await PathfinderUI(page);
+            await PathfinderSwapButton(page);
         });
 
         test ('005 | Path Finder field is present and functional',async ({page}) => {
-   
+            await PathfinderInput(page);
         });
 
-        test ('006 | Path Finder Search Route button is present and visible',async ({page}) => {
-   
+        test ('006 | Path Finder swap button button is present and visible',async ({page}) => {
+            await PathfinderInput(page);
+            await PathfinderSwapButton(page);
         });
 
     });
