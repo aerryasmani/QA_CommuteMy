@@ -38,6 +38,16 @@ export async function PathfinderUI (page) {
 
     const swapButton = page.getByRole('button', { name: 'Swap origin and destination' });
     await expect(swapButton).toBeVisible();
+
+    const searchRouteButton = page.locator('button', { hasText: 'Search Route',});
+
+    console.log('Button count:', await searchRouteButton.count());
+    console.log('Button text:', await searchRouteButton.innerText());
+    console.log('Is disabled:', await searchRouteButton.isDisabled());
+    console.log('Disabled attribute:', await searchRouteButton.getAttribute('disabled'));
+
+    await expect(searchRouteButton).toBeDisabled();
+
 }
 
 export async function PathfinderInput (page){
@@ -71,8 +81,8 @@ export async function PathfinderSwapButton (page){
         // After odd clicks (1st, 3rd, etc.)
         await expect(originField).toHaveValue('Masjid Jamek');
         await expect(destinationField).toHaveValue('KL Sentral');
-        } else {
-    // After even clicks (2nd, 4th, etc.)
+        } 
+        else {
         await expect(originField).toHaveValue('KL Sentral');
         await expect(destinationField).toHaveValue('Masjid Jamek');
          }
@@ -80,7 +90,29 @@ export async function PathfinderSwapButton (page){
 }
 
 export async function PathfinderSearchButton (page){
-    
+const searchRouteButton = page.locator('button', { hasText: 'Search Route' });
+
+const originField = page.getByPlaceholder('Origin');
+const destinationField = page.getByPlaceholder('Destination');
+
+// ---- ORIGIN ----
+await originField.fill('KL Sentral');
+
+const originOption = page.locator('text=KL Sentral').first();
+await expect(originOption).toBeVisible();
+await originOption.click();
+
+// ---- DESTINATION ----
+await destinationField.fill('Masjid Jamek');
+
+const destinationOption = page.locator('text=MASJID JAMEK').first();
+await expect(destinationOption).toBeVisible();
+await destinationOption.click();
+
+// ---- ASSERT & CLICK ----
+await expect(searchRouteButton).toBeEnabled();
+await searchRouteButton.click();
+
 }
 
 
