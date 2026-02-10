@@ -90,29 +90,64 @@ export async function PathfinderSwapButton (page){
 }
 
 export async function PathfinderSearchButton (page){
-const searchRouteButton = page.locator('button', { hasText: 'Search Route' });
+    const searchRouteButton = page.locator('button', { hasText: 'Search Route' });
 
-const originField = page.getByPlaceholder('Origin');
-const destinationField = page.getByPlaceholder('Destination');
+    const originField = page.getByPlaceholder('Origin');
+    const destinationField = page.getByPlaceholder('Destination');
 
-// ---- ORIGIN ----
-await originField.fill('KL Sentral');
+    await originField.fill('KL Sentral');
 
-const originOption = page.locator('text=KL Sentral').first();
-await expect(originOption).toBeVisible();
-await originOption.click();
+    const originOption = page.locator('text=KL Sentral').first();
+    await expect(originOption).toBeVisible();
+    await originOption.click();
 
-// ---- DESTINATION ----
-await destinationField.fill('Masjid Jamek');
+    await destinationField.fill('Masjid Jamek');
 
-const destinationOption = page.locator('text=MASJID JAMEK').first();
-await expect(destinationOption).toBeVisible();
-await destinationOption.click();
+    const destinationOption = page.locator('text=MASJID JAMEK').first();
+    await expect(destinationOption).toBeVisible();
+    await destinationOption.click();
 
-// ---- ASSERT & CLICK ----
-await expect(searchRouteButton).toBeEnabled();
-await searchRouteButton.click();
 
+    await expect(searchRouteButton).toBeEnabled();
+    await searchRouteButton.click();
+
+    await page.waitForLoadState('networkidle', { timeout: 30000 });
+
+    await page.waitForSelector('text=Back To Search', { state: 'visible', timeout: 10000 });
+
+
+    await expect(page.getByText('Back To Search')).toBeVisible();
+    await expect(page.getByText('Departure Time')).toBeVisible();
+}
+
+export async function PathfinderBottomPart(page) {
+    const BottomText = page.locator('p.text-yellow-500', {
+        hasText: 'This feature is still in beta. Please report any issues you encounter in the',
+    });
+
+    await expect(BottomText).toBeVisible();
+
+    const SocialGithub = page.getByRole('link', { name: 'GitHub repository' });
+    await expect(SocialGithub).toBeVisible();
+
+    // Check if new tab opens, otherwise handle same-page navigation
+    const pagePromise = page.context().waitForEvent('page', { timeout: 2000 }).catch(() => null);
+    
+    await SocialGithub.click();
+    
+    const newPage = await pagePromise;
+    
+    if (newPage) {
+        // New tab opened
+        await newPage.waitForLoadState('domcontentloaded');
+        await expect(newPage.getByText('New issue')).toBeVisible();
+        await newPage.close();
+    } else {
+        // Same page navigation
+        await page.waitForLoadState('domcontentloaded');
+        await expect(page.getByText('New issue')).toBeVisible();
+        await page.goBack(); // Go back to original page
+    }
 }
 
 

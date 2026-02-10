@@ -6,7 +6,8 @@ import {
     PathfinderUI,
     PathfinderInput,
     PathfinderSwapButton,
-    PathfinderSearchButton
+    PathfinderSearchButton,
+    PathfinderBottomPart
 } from '../helpers/homepage';
 
 const BaseUrl ='https://commute.my/';
@@ -56,15 +57,20 @@ test.describe('Homepage',()=>{
             await PathfinderSearchButton(page);
         });
 
+        test ('008 | Bottom text and github issue link is present',async ({page}) => {
+            await PathfinderBottomPart(page);
+            await GeneralHomepage(page);
+        });
+
     });
     
     test.describe('Browse Line Section',()=>{
 
-        test ('007 | Browse Line Section is present and visible',async ({page}) => {
+        test ('009 | Browse Line Section is present and visible',async ({page}) => {
    
         });
 
-        test ('008 | Browse Line button is present and visible',async ({page}) => {
+        test ('010 | Browse Line button is present and visible',async ({page}) => {
  
         });
 
