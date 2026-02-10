@@ -90,15 +90,29 @@ export async function PathfinderSwapButton (page){
 }
 
 export async function PathfinderSearchButton (page){
-    const searchRouteButton = page.locator('button', { hasText: 'Search Route',});
-    
-    const originField = page.getByPlaceholder('Origin');
-    const destinationField = page.getByPlaceholder('Destination');
-    
-    await originField.fill ('KL Sentral')
-    await destinationField.fill ('Masjid Jamek')
+const searchRouteButton = page.locator('button', { hasText: 'Search Route' });
 
-    await searchRouteButton.click();
+const originField = page.getByPlaceholder('Origin');
+const destinationField = page.getByPlaceholder('Destination');
+
+// ---- ORIGIN ----
+await originField.fill('KL Sentral');
+
+const originOption = page.locator('text=KL Sentral').first();
+await expect(originOption).toBeVisible();
+await originOption.click();
+
+// ---- DESTINATION ----
+await destinationField.fill('Masjid Jamek');
+
+const destinationOption = page.locator('text=MASJID JAMEK').first();
+await expect(destinationOption).toBeVisible();
+await destinationOption.click();
+
+// ---- ASSERT & CLICK ----
+await expect(searchRouteButton).toBeEnabled();
+await searchRouteButton.click();
+
 }
 
 
