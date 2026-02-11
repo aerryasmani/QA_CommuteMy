@@ -150,4 +150,52 @@ export async function PathfinderBottomPart(page) {
     }
 }
 
+export async function LinesButton (page){
+
+    const lines = [
+        'LRT Ampang',
+        'LRT Sri Petaling', 
+        'LRT Kelana Jaya',
+        'MR Monorail KL',
+        'MRT Kajang',
+        'MRT Putrajaya'
+    ];
+    
+    for (const lineName of lines) {
+        await expect(page.getByRole('button', { name: lineName })).toBeVisible();
+    }
+}
+
+export async function LinesButtonFunction(page) {
+        const lines = [
+        'LRT Ampang',
+        'LRT Sri Petaling', 
+        'LRT Kelana Jaya',
+        'MR Monorail KL',
+        'MRT Kajang',
+        'MRT Putrajaya'
+    ];
+    
+    for (const lineName of lines) {
+        await expect(page.getByRole('button', { name: lineName })).toBeVisible();
+    }
+
+    // Test ONE in detail (e.g., MR Monorail KL)
+    const LinesButton = page.getByRole('button', { name: 'LRT Kelana Jaya' });
+    await LinesButton.click();
+    
+    await expect(page).toHaveURL(/\/line\/KJ/); 
+    await expect(page.getByRole('heading', { name: 'Putra Heights' })).toBeVisible();
+    
+    
+    // Go back and test ONE more different line (sanity check)
+    await page.goBack();
+    
+    const lrtButton = page.getByRole('button', { name: 'LRT Ampang' });
+    await lrtButton.click();
+    
+    await expect(page).toHaveURL(/\/line\/AG/);
+    await expect(page.getByRole('heading', { name: 'Ampang' })).toBeVisible();
+    
+}
 
