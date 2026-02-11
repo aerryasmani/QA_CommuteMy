@@ -11,6 +11,14 @@ import {
     LinesButton,
     LinesButtonFunction
 } from '../helpers/homepage';
+import {
+    NavSettingPage,
+    ValidateSettingPage,
+    NavDonatePage,
+    ValidateDonatePage,
+    VerifyAboutPage,
+    NavAboutPage
+} from '../helpers/general navigation';
 
 const BaseUrl ='https://commute.my/';
 
@@ -78,5 +86,27 @@ test.describe('Homepage',()=>{
 
     });
 
+    test.describe('General Navigation',()=>{
+
+        test ('011 | Verify Setting Page',async ({page}) => {
+            await NavSettingPage(page);
+            await ValidateSettingPage(page);
+        });
+
+        test ('012 | Verify Donate Page',async ({page}) => {
+            await NavDonatePage(page);
+            await ValidateDonatePage(page);
+        });
+
+        test ('013 | Verify About Page',async ({page}) => {
+            await NavAboutPage(page);
+            await VerifyAboutPage(page);
+        });
+
+        test ('014 | Footer Page',async ({page}) => {
+
+        });
+
+    });
 
 })
