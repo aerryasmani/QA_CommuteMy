@@ -17,7 +17,8 @@ import {
     NavDonatePage,
     ValidateDonatePage,
     VerifyAboutPage,
-    NavAboutPage
+    NavAboutPage,
+    trademark
 } from '../helpers/general navigation';
 
 const BaseUrl ='https://commute.my/';
@@ -104,7 +105,7 @@ test.describe('Homepage',()=>{
         });
 
         test ('014 | Footer Page',async ({page}) => {
-
+            await trademark(page);
         });
 
     });
