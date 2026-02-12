@@ -7,8 +7,19 @@ import {
     PathfinderInput,
     PathfinderSwapButton,
     PathfinderSearchButton,
-    PathfinderBottomPart
+    PathfinderBottomPart,
+    LinesButton,
+    LinesButtonFunction
 } from '../helpers/homepage';
+import {
+    NavSettingPage,
+    ValidateSettingPage,
+    NavDonatePage,
+    ValidateDonatePage,
+    VerifyAboutPage,
+    NavAboutPage,
+    trademark
+} from '../helpers/general navigation';
 
 const BaseUrl ='https://commute.my/';
 
@@ -67,14 +78,36 @@ test.describe('Homepage',()=>{
     test.describe('Browse Line Section',()=>{
 
         test ('009 | Browse Line Section is present and visible',async ({page}) => {
-   
+            await LinesButton(page);
         });
 
-        test ('010 | Browse Line button is present and visible',async ({page}) => {
- 
+        test ('010 | Validate the functionality of lines button',async ({page}) => {
+            await LinesButtonFunction(page);
         });
 
     });
 
+    test.describe('General Navigation',()=>{
+
+        test ('011 | Verify Setting Page',async ({page}) => {
+            await NavSettingPage(page);
+            await ValidateSettingPage(page);
+        });
+
+        test ('012 | Verify Donate Page',async ({page}) => {
+            await NavDonatePage(page);
+            await ValidateDonatePage(page);
+        });
+
+        test ('013 | Verify About Page',async ({page}) => {
+            await NavAboutPage(page);
+            await VerifyAboutPage(page);
+        });
+
+        test ('014 | Footer Page',async ({page}) => {
+            await trademark(page);
+        });
+
+    });
 
 })
