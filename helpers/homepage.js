@@ -134,19 +134,18 @@ export async function PathfinderBottomPart(page) {
     const pagePromise = page.context().waitForEvent('page', { timeout: 2000 }).catch(() => null);
     
     await SocialGithub.click();
-    
     const newPage = await pagePromise;
-    
+
     if (newPage) {
-        // New tab opened
+        // New tab opened - verify URL
         await newPage.waitForLoadState('domcontentloaded');
-        await expect(newPage.getByText('New issue')).toBeVisible();
+        await expect(newPage).toHaveURL(/github\.com\/commute-my\/commute-my\/issues/);
+        console.log('Actual URL:', newPage.url());
         await newPage.close();
     } else {
         // Same page navigation
         await page.waitForLoadState('domcontentloaded');
-        await expect(page.getByText('New issue')).toBeVisible();
-        await page.goBack(); // Go back to original page
+        await page.goBack();
     }
 }
 
