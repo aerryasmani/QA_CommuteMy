@@ -19,7 +19,7 @@ import {
     VerifyAboutPage,
     NavAboutPage,
     trademark
-} from '../helpers/general navigation';
+} from '../helpers/generalnavigation';
 
 const BaseUrl ='https://commute.my/';
 
