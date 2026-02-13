@@ -1,193 +1,209 @@
-import {test,expect} from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-const PageTitle ="Commute"
-const PageMetaTag ="A project aims to make public transportation in the Klang Valley more accessible to everyone, including tourists."
+const PageTitle = "Commute";
+const PageMetaTag =
+  "A project aims to make public transportation in the Klang Valley more accessible to everyone, including tourists.";
 
-export async function GeneralHomepage (page) {
-    await expect (page).toHaveTitle(PageTitle);
+export async function GeneralHomepage(page) {
+  await expect(page).toHaveTitle(PageTitle);
 
-    const MetaDescription = await page.getAttribute('meta[description]', 'description');
-    expect (MetaDescription).toBe(PageMetaTag);
+  const MetaDescription = await page.getAttribute(
+    "meta[description]",
+    "description",
+  );
+  expect(MetaDescription).toBe(PageMetaTag);
 }
 
-export async function CommuteLogo (page) {
-    const Logo = page.locator('img[src="logo.svg"]')
- 
-    await expect(Logo).toBeVisible();
-    await expect(Logo).toHaveCount(1);
-    await expect(Logo).toHaveAttribute('src', 'logo.svg');
+export async function CommuteLogo(page) {
+  const Logo = page.locator('img[src="logo.svg"]');
 
+  await expect(Logo).toBeVisible();
+  await expect(Logo).toHaveCount(1);
+  await expect(Logo).toHaveAttribute("src", "logo.svg");
 }
 
-export async function HeroTextContent (page) {
-    await expect(page.getByText('Commute')).toBeVisible();
-    await expect(page.getByText('Making Klang Valley public transport easier for everyone – locals & tourists alike.')).toBeVisible();
+export async function HeroTextContent(page) {
+  await expect(page.getByText("Commute")).toBeVisible();
+  await expect(
+    page.getByText(
+      "Making Klang Valley public transport easier for everyone – locals & tourists alike.",
+    ),
+  ).toBeVisible();
 }
 
-export async function PathfinderUI (page) {
-    await expect(page.getByText('Plan Your Journey')).toBeVisible();
-    await expect(page.getByText('Find the best route across RapidKL lines.')).toBeVisible();
+export async function PathfinderUI(page) {
+  await expect(page.getByText("Plan Your Journey")).toBeVisible();
+  await expect(
+    page.getByText("Find the best route across RapidKL lines."),
+  ).toBeVisible();
 
-    const originField = page.getByPlaceholder('Origin');
-    await expect(originField).toBeVisible();
-    await expect(originField).toHaveAttribute('placeholder', 'Origin');
+  const originField = page.getByPlaceholder("Origin");
+  await expect(originField).toBeVisible();
+  await expect(originField).toHaveAttribute("placeholder", "Origin");
 
-    const destinationField = page.getByPlaceholder('Destination');
-    await expect(destinationField).toBeVisible();
-    await expect(destinationField).toHaveAttribute('placeholder', 'Destination');
+  const destinationField = page.getByPlaceholder("Destination");
+  await expect(destinationField).toBeVisible();
+  await expect(destinationField).toHaveAttribute("placeholder", "Destination");
 
-    const swapButton = page.getByRole('button', { name: 'Swap origin and destination' });
-    await expect(swapButton).toBeVisible();
+  const swapButton = page.getByRole("button", {
+    name: "Swap origin and destination",
+  });
+  await expect(swapButton).toBeVisible();
 
-    const searchRouteButton = page.locator('button', { hasText: 'Search Route',});
-    await expect(searchRouteButton).toBeDisabled();
-
+  const searchRouteButton = page.locator("button", { hasText: "Search Route" });
+  await expect(searchRouteButton).toBeDisabled();
 }
 
-export async function PathfinderInput (page){
+export async function PathfinderInput(page) {
+  const originField = page.getByPlaceholder("Origin");
+  const destinationField = page.getByPlaceholder("Destination");
 
-    const originField = page.getByPlaceholder('Origin');
-    const destinationField = page.getByPlaceholder('Destination');
+  await originField.fill("KL Sentral");
+  await destinationField.fill("MASJID JAMEK");
 
-    await originField.fill ('KL Sentral')
-    await destinationField.fill ('Masjid Jamek')
+  await originField.clear();
+  await expect(originField).toHaveValue("");
 
-    await originField.clear();
-    await expect(originField).toHaveValue('');
-
-    await destinationField.clear();
-    await expect(destinationField).toHaveValue('');
+  await destinationField.clear();
+  await expect(destinationField).toHaveValue("");
 }
 
-export async function PathfinderSwapButton (page){
-    
-    const originField = page.getByPlaceholder('Origin');
-    const destinationField = page.getByPlaceholder('Destination');
-    const swapButton = page.getByRole('button', { name: 'Swap origin and destination' });
-    
-    await originField.fill ('KL Sentral')
-    await destinationField.fill ('Masjid Jamek')
+export async function PathfinderSwapButton(page) {
+  const originField = page.getByPlaceholder("Origin");
+  const destinationField = page.getByPlaceholder("Destination");
+  const swapButton = page.getByRole("button", {
+    name: "Swap origin and destination",
+  });
 
-    for (let i = 0; i < 3; i++) {
-        await swapButton.click();
-  
-        if (i % 2 === 0) {
-        // After odd clicks (1st, 3rd, etc.)
-        await expect(originField).toHaveValue('Masjid Jamek');
-        await expect(destinationField).toHaveValue('KL Sentral');
-        } 
-        else {
-        await expect(originField).toHaveValue('KL Sentral');
-        await expect(destinationField).toHaveValue('Masjid Jamek');
-         }
+  // Fill AND select from autocomplete
+  await originField.fill("KL Sentral");
+  await page.locator("text=KL Sentral").first().click();
+
+  await destinationField.fill("MASJID JAMEK");
+  await page.locator("text=MASJID JAMEK").first().click();
+
+  for (let i = 0; i < 3; i++) {
+    await swapButton.click();
+
+    if (i % 2 === 0) {
+      // After odd clicks (1st, 3rd, etc.)
+      await expect(originField).toHaveValue("MASJID JAMEK");
+      await expect(destinationField).toHaveValue("KL SENTRAL");
+    } else {
+      await expect(originField).toHaveValue("KL SENTRAL");
+      await expect(destinationField).toHaveValue("MASJID JAMEK");
     }
+  }
 }
 
-export async function PathfinderSearchButton (page){
-    const searchRouteButton = page.locator('button', { hasText: 'Search Route' });
+export async function PathfinderSearchButton(page) {
+  const searchRouteButton = page.locator("button", { hasText: "Search Route" });
 
-    const originField = page.getByPlaceholder('Origin');
-    const destinationField = page.getByPlaceholder('Destination');
+  const originField = page.getByPlaceholder("Origin");
+  const destinationField = page.getByPlaceholder("Destination");
 
-    await originField.fill('KL Sentral');
+  await originField.fill("KL SENTRAL");
 
-    const originOption = page.locator('text=KL Sentral').first();
-    await expect(originOption).toBeVisible();
-    await originOption.click();
+  const originOption = page.locator("text=KL SENTRAL").first();
+  await expect(originOption).toBeVisible();
+  await originOption.click();
 
-    await destinationField.fill('Masjid Jamek');
+  await destinationField.fill("Masjid Jamek");
 
-    const destinationOption = page.locator('text=MASJID JAMEK').first();
-    await expect(destinationOption).toBeVisible();
-    await destinationOption.click();
+  const destinationOption = page.locator("text=MASJID JAMEK").first();
+  await expect(destinationOption).toBeVisible();
+  await destinationOption.click();
 
+  await expect(searchRouteButton).toBeEnabled();
+  await searchRouteButton.click();
 
-    await expect(searchRouteButton).toBeEnabled();
-    await searchRouteButton.click();
+  await page.waitForSelector("text=Back To Search", {
+    state: "visible",
+    timeout: 10000,
+  });
 
-    await page.waitForLoadState('networkidle', { timeout: 30000 });
-
-    await page.waitForSelector('text=Back To Search', { state: 'visible', timeout: 10000 });
-
-
-    await expect(page.getByText('Back To Search')).toBeVisible();
-    await expect(page.getByText('Departure Time')).toBeVisible();
+  await expect(page.getByText("Back To Search")).toBeVisible();
+  await expect(page.getByText("Departure Time")).toBeVisible();
 }
 
 export async function PathfinderBottomPart(page) {
-    const BottomText = page.locator('p.text-yellow-500', {
-        hasText: 'This feature is still in beta. Please report any issues you encounter in the',
-    });
+  const BottomText = page.locator("p.text-yellow-500", {
+    hasText:
+      "This feature is still in beta. Please report any issues you encounter in the",
+  });
 
-    await expect(BottomText).toBeVisible();
+  await expect(BottomText).toBeVisible();
 
-    const SocialGithub = page.getByRole('link', { name: 'GitHub repository' });
-    await expect(SocialGithub).toBeVisible();
+  const SocialGithub = page.getByRole("link", { name: "GitHub repository" });
+  await expect(SocialGithub).toBeVisible();
 
-    // Check if new tab opens, otherwise handle same-page navigation
-    const pagePromise = page.context().waitForEvent('page', { timeout: 2000 }).catch(() => null);
-    
-    await SocialGithub.click();
-    const newPage = await pagePromise;
+  // Check if new tab opens, otherwise handle same-page navigation
+  const pagePromise = page
+    .context()
+    .waitForEvent("page", { timeout: 2000 })
+    .catch(() => null);
 
-    if (newPage) {
-        // New tab opened - verify URL
-        await newPage.waitForLoadState('domcontentloaded');
-        await expect(newPage).toHaveURL(/github\.com\/commute-my\/commute-my\/issues/);
-        await newPage.close();
-    } else {
-        // Same page navigation
-        await page.waitForLoadState('domcontentloaded');
-        await page.goBack();
-    }
+  await SocialGithub.click();
+  const newPage = await pagePromise;
+
+  if (newPage) {
+    // New tab opened - verify URL
+    await newPage.waitForLoadState("domcontentloaded");
+    await expect(newPage).toHaveURL(
+      /github\.com\/commute-my\/commute-my\/issues/,
+    );
+    await newPage.close();
+  } else {
+    // Same page navigation
+    await page.waitForLoadState("domcontentloaded");
+    await page.goBack();
+  }
 }
 
-export async function LinesButton (page){
+export async function LinesButton(page) {
+  const lines = [
+    "LRT Ampang",
+    "LRT Sri Petaling",
+    "LRT Kelana Jaya",
+    "MR Monorail KL",
+    "MRT Kajang",
+    "MRT Putrajaya",
+  ];
 
-    const lines = [
-        'LRT Ampang',
-        'LRT Sri Petaling', 
-        'LRT Kelana Jaya',
-        'MR Monorail KL',
-        'MRT Kajang',
-        'MRT Putrajaya'
-    ];
-    
-    for (const lineName of lines) {
-        await expect(page.getByRole('button', { name: lineName })).toBeVisible();
-    }
+  for (const lineName of lines) {
+    await expect(page.getByRole("button", { name: lineName })).toBeVisible();
+  }
 }
 
 export async function LinesButtonFunction(page) {
-        const lines = [
-        'LRT Ampang',
-        'LRT Sri Petaling', 
-        'LRT Kelana Jaya',
-        'MR Monorail KL',
-        'MRT Kajang',
-        'MRT Putrajaya'
-    ];
-    
-    for (const lineName of lines) {
-        await expect(page.getByRole('button', { name: lineName })).toBeVisible();
-    }
+  const lines = [
+    "LRT Ampang",
+    "LRT Sri Petaling",
+    "LRT Kelana Jaya",
+    "MR Monorail KL",
+    "MRT Kajang",
+    "MRT Putrajaya",
+  ];
 
-    // Test ONE in detail (e.g., MR Monorail KL)
-    const LinesButton = page.getByRole('button', { name: 'LRT Kelana Jaya' });
-    await LinesButton.click();
-    
-    await expect(page).toHaveURL(/\/line\/KJ/); 
-    await expect(page.getByRole('heading', { name: 'Putra Heights' })).toBeVisible();
-    
-    
-    // Go back and test ONE more different line (sanity check)
-    await page.goBack();
-    
-    const lrtButton = page.getByRole('button', { name: 'LRT Ampang' });
-    await lrtButton.click();
-    
-    await expect(page).toHaveURL(/\/line\/AG/);
-    await expect(page.getByRole('heading', { name: 'Ampang' })).toBeVisible();
-    
+  for (const lineName of lines) {
+    await expect(page.getByRole("button", { name: lineName })).toBeVisible();
+  }
+
+  // Test ONE in detail (e.g., MR Monorail KL)
+  const LinesButton = page.getByRole("button", { name: "LRT Kelana Jaya" });
+  await LinesButton.click();
+
+  await expect(page).toHaveURL(/\/line\/KJ/);
+  await expect(
+    page.getByRole("heading", { name: "Putra Heights" }),
+  ).toBeVisible();
+
+  // Go back and test ONE more different line (sanity check)
+  await page.goBack();
+
+  const lrtButton = page.getByRole("button", { name: "LRT Ampang" });
+  await lrtButton.click();
+
+  await expect(page).toHaveURL(/\/line\/AG/);
+  await expect(page.getByRole("heading", { name: "Ampang" })).toBeVisible();
 }
-
