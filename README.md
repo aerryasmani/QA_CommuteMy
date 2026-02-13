@@ -21,13 +21,13 @@ On Linux you may need system dependencies: `npx playwright install --with-deps`.
 
 Tests run against **https://commute.my/**.
 
-| Command | Description |
-|--------|-------------|
-| `npx playwright test` | Run all tests |
-| `npx playwright test --ui` | Run with Playwright UI |
-| `npx playwright test --project=chromium` | Run in Chromium only |
-| `npx playwright test --headed` | Run in headed mode |
-| `npx playwright test --debug` | Run in debug mode |
+| Command                                  | Description            |
+| ---------------------------------------- | ---------------------- |
+| `npx playwright test`                    | Run all tests          |
+| `npx playwright test --ui`               | Run with Playwright UI |
+| `npx playwright test --project=chromium` | Run in Chromium only   |
+| `npx playwright test --headed`           | Run in headed mode     |
+| `npx playwright test --debug`            | Run in debug mode      |
 
 ## Test report
 
@@ -53,12 +53,12 @@ Playwright tests run on GitHub Actions on push and pull requests to `main` and `
 
 ## Project structure
 
-| Path | Description |
-|------|-------------|
-| `tests/` | Test specs (e.g. `homepage.spec.js`) |
-| `helpers/` | Reusable helpers: `homepage.js` (pathfinder, lines, hero, logo), `general navigation.js` (Settings, Donate, About, footer) |
-| `playwright.config.js` | Playwright config (testDir, browsers, reporter, CI retries) |
-| `.github/workflows/` | CI workflow for Playwright |
+| Path                   | Description                                                                                                                |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `tests/`               | Test specs (e.g. `homepage.spec.js`)                                                                                       |
+| `helpers/`             | Reusable helpers: `homepage.js` (pathfinder, lines, hero, logo), `general navigation.js` (Settings, Donate, About, footer) |
+| `playwright.config.js` | Playwright config (testDir, browsers, reporter, CI retries)                                                                |
+| `.github/workflows/`   | CI workflow for Playwright                                                                                                 |
 
 ## Test coverage summary
 
@@ -69,22 +69,22 @@ Playwright tests run on GitHub Actions on push and pull requests to `main` and `
 
 ## Test cases
 
-| ID | Test name | Area |
-|----|-----------|------|
-| 001 | Page Load - Title and Meta Tags | Page Load Elements |
-| 002 | Page Load - Logo Display | Page Load Elements |
-| 003 | Page Load - Main Heading Display | Page Load Elements |
-| 004 | Path Finder Section is present | Pathfinder Section |
-| 005 | Path Finder field is present and functional | Pathfinder Section |
-| 006 | Path Finder swap button button is present and visible | Pathfinder Section |
-| 007 | Search Route button is present and working | Pathfinder Section |
-| 008 | Bottom text and github issue link is present | Pathfinder Section |
-| 009 | Browse Line Section is present and visible | Browse Line Section |
-| 010 | Validate the functionality of lines button | Browse Line Section |
-| 011 | Verify Setting Page | General Navigation |
-| 012 | Verify Donate Page | General Navigation |
-| 013 | Verify About Page | General Navigation |
-| 014 | Footer Page | General Navigation |
+| ID  | Test name                                             | Area                |
+| --- | ----------------------------------------------------- | ------------------- |
+| 001 | Page Load - Title and Meta Tags                       | Page Load Elements  |
+| 002 | Page Load - Logo Display                              | Page Load Elements  |
+| 003 | Page Load - Main Heading Display                      | Page Load Elements  |
+| 004 | Path Finder Section is present                        | Pathfinder Section  |
+| 005 | Path Finder field is present and functional           | Pathfinder Section  |
+| 006 | Path Finder swap button button is present and visible | Pathfinder Section  |
+| 007 | Search Route button is present and working            | Pathfinder Section  |
+| 008 | Bottom text and github issue link is present          | Pathfinder Section  |
+| 009 | Browse Line Section is present and visible            | Browse Line Section |
+| 010 | Validate the functionality of lines button            | Browse Line Section |
+| 011 | Verify Setting Page                                   | General Navigation  |
+| 012 | Verify Donate Page                                    | General Navigation  |
+| 013 | Verify About Page                                     | General Navigation  |
+| 014 | Footer Page                                           | General Navigation  |
 
 **What each group covers:**
 
