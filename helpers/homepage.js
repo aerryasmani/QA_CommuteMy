@@ -40,12 +40,6 @@ export async function PathfinderUI (page) {
     await expect(swapButton).toBeVisible();
 
     const searchRouteButton = page.locator('button', { hasText: 'Search Route',});
-
-    console.log('Button count:', await searchRouteButton.count());
-    console.log('Button text:', await searchRouteButton.innerText());
-    console.log('Is disabled:', await searchRouteButton.isDisabled());
-    console.log('Disabled attribute:', await searchRouteButton.getAttribute('disabled'));
-
     await expect(searchRouteButton).toBeDisabled();
 
 }
@@ -140,7 +134,6 @@ export async function PathfinderBottomPart(page) {
         // New tab opened - verify URL
         await newPage.waitForLoadState('domcontentloaded');
         await expect(newPage).toHaveURL(/github\.com\/commute-my\/commute-my\/issues/);
-        console.log('Actual URL:', newPage.url());
         await newPage.close();
     } else {
         // Same page navigation
