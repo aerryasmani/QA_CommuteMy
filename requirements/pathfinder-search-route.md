@@ -1,10 +1,10 @@
-# Feature: Pathfinder Search Route
-
+---
 id: PF-003
 title: Pathfinder Search Route
 priority: high
-
 ---
+
+# Feature: Pathfinder Search Route
 
 A user selects origin and destination stations. The app presents a "Search Route" button. When both origin and destination are valid, the button becomes enabled. Clicking it navigates to a results view that shows route options with departure times.
 
